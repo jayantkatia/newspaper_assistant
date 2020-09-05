@@ -62,5 +62,6 @@
          </cursor>
       </ImageView>
       <ProgressIndicator fx:id="progressIndicator" layoutX="551.0" layoutY="340.0" progress="0.0" visible="false" />
+      <Text fx:id="txtHelp" fill="#ee6060" layoutX="333.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

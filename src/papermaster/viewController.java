@@ -3,7 +3,7 @@ package papermaster;
 //TODO::  Price Field Validation
 //TODO::  Info on update and save
 //TODO::  prevent user from off before uploading image
-
+//TODO::  update and save button disable/enable
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -69,7 +69,6 @@ public class viewController {
     	services.deleteForPaperMaster(comboTitle.getSelectionModel().getSelectedItem());
     	clearFields();
     	fillComboBox();
-    	txtHelp.setText("");
     }
     
    
@@ -83,8 +82,9 @@ public class viewController {
     	
     	if(choosenImage==null)
     		return;
-    	progressIndicator=new ProgressIndicator(0.0f);
+    	
     	progressIndicator.setVisible(true);
+    	
     	Task<Void> task= new Task<Void>() {
 			@Override
 			protected Void call() throws Exception{
@@ -96,7 +96,6 @@ public class viewController {
 					
 					int maxlength=f1.available();
 					int i=0;
-					txtHelp.setText("Image is being transferred");
 					for(int c=f1.read(); c!=-1 ;c=f1.read()) {
 						f2.write(c);
 						updateProgress(i,maxlength);
@@ -116,7 +115,6 @@ public class viewController {
 				public void handle(WorkerStateEvent event) {
 					System.out.println("Done ");
 			    	progressIndicator.setVisible(false);
-			    	txtHelp.setText("");
 
 				}
 			});
@@ -141,48 +139,43 @@ public class viewController {
 
     @FXML
     void doNew(ActionEvent event) {
-		txtHelp.setText("");
     	comboTitle.getSelectionModel().clearSelection();
     	txtPrice.clear();
     	img.setImage(new Image("file:static/images/005-add-1.png"));	
     }
-    @FXML
-    private Text txtHelp;
+
     @FXML
     void doSave(ActionEvent event) {
     	if(checkForNull()) {
     		services.saveForPaperMaster(getPaperMasterObject());
-    		txtHelp.setText("");
     		fillComboBox();
     	}
-    	else {
-    		txtHelp.setText("Please fill all the fields");
-    	}
+//    	else {
+//
+//    	}
     }
     @FXML
     void doTitle(ActionEvent event) {
-		txtHelp.setText("");
+
     	ModelPaperMaster data=services.fetchData(comboTitle.getSelectionModel().getSelectedItem());
     	if(data != null) {
     		txtPrice.setText(data.price.toString());
-    		imagePath=data.imagePath;
+    		imagePath="file:"+data.imagePath;
     		img.setImage(new Image(imagePath));
-    		btnSave.setDisable(true);
+//    		btnSave.setDisable(true);
     	}else {
-    		btnUpdate.setDisable(true);
-    		btnDelete.setDisable(false);
+//    		btnUpdate.setDisable(true);
+//    		btnDelete.setDisable(false);
     	}
     }
     @FXML
     void doUpdate(ActionEvent event) {
     	if(checkForNull()) {
-    		txtHelp.setText("");
     		services.updateForPaperMaster(getPaperMasterObject());
-
     	}
-    	else {
-    		txtHelp.setText("Please fill all the fields");
-    	}
+//    	else {
+//    		
+//    	}
     }
     @FXML
     void initialize() {
@@ -203,12 +196,13 @@ public class viewController {
     
     
     boolean checkForNull() {
-    	if(!imagePath.isEmpty() && !comboTitle.getSelectionModel().getSelectedItem().isEmpty() && !txtPrice.getText().isEmpty())
+    	if(imagePath!=null && !comboTitle.getSelectionModel().getSelectedItem().isEmpty() && !txtPrice.getText().isEmpty())
     		return true;
     	return false;
     }
 
     void fillComboBox() {
+    	comboTitle.getItems().removeAll();
     	ArrayList<String> list=services.fetchTitles();
         comboTitle.getItems().addAll(list);
     }
@@ -218,7 +212,6 @@ public class viewController {
     	txtPrice.clear();
     	imagePath=null;
     	img.setImage(new Image("file:static/images/005-add-1.png"));
-    
     }
 }
 
