@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -13,55 +14,85 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="papermaster.viewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="papermaster.viewController">
    <children>
-      <Text layoutX="221.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paper  Master">
+      <Text layoutX="287.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paper  Master">
          <font>
-            <Font name="System Bold Italic" size="16.0" />
+            <Font name="System Bold Italic" size="18.0" />
          </font>
       </Text>
-      <Line endX="135.0" endY="60.0" startX="438.0" startY="60.0" />
+      <Line endX="135.0" endY="60.0" layoutX="58.0" startX="438.0" startY="60.0" />
       <Label layoutX="55.0" layoutY="96.0" text="Paper Title ">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboTitle" editable="true" layoutX="55.0" layoutY="122.0" onAction="#doTitle" prefHeight="26.0" prefWidth="215.0" promptText="Select Title" />
-      <Label layoutX="55.0" layoutY="186.0" text="Price ">
+      <ComboBox fx:id="comboTitle" editable="true" layoutX="55.0" layoutY="122.0" onAction="#doTitle" prefHeight="26.0" prefWidth="215.0" promptText="Select Title">
+         <effect>
+            <InnerShadow height="5.82" radius="2.4725" width="6.07" />
+         </effect></ComboBox>
+      <Label layoutX="55.0" layoutY="200.0" text="Price ">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPrice" layoutX="55.0" layoutY="218.0" prefHeight="26.0" prefWidth="215.0" promptText="Enter Price" />
-      <Button fx:id="btnSave" layoutX="255.0" layoutY="296.0" mnemonicParsing="false" onAction="#doSave" text="Save">
+      <TextField fx:id="txtPrice" layoutX="55.0" layoutY="230.0" prefHeight="26.0" prefWidth="215.0" promptText="Enter Price">
+         <effect>
+            <InnerShadow height="5.82" radius="2.4725" width="6.07" />
+         </effect></TextField>
+      <Button fx:id="btnSave" layoutX="241.0" layoutY="363.0" mnemonicParsing="false" onAction="#doSave" text="Save">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
+         <effect>
+            <InnerShadow height="5.82" radius="2.4725" width="6.07" />
+         </effect>
       </Button>
-      <Button fx:id="btnUpdate" layoutX="333.0" layoutY="296.0" mnemonicParsing="false" onAction="#doUpdate" text="Update">
+      <Button fx:id="btnUpdate" layoutX="326.0" layoutY="363.0" mnemonicParsing="false" onAction="#doUpdate" text="Update">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
+         <effect>
+            <InnerShadow height="5.82" radius="2.4725" width="6.07" />
+         </effect>
       </Button>
-      <Button fx:id="btnDelete" layoutX="428.0" layoutY="296.0" mnemonicParsing="false" onAction="#doDelete" text="Delete">
+      <Button fx:id="btnDelete" layoutX="425.0" layoutY="363.0" mnemonicParsing="false" onAction="#doDelete" text="Delete">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
+         <effect>
+            <InnerShadow height="5.82" radius="2.4725" width="6.07" />
+         </effect>
       </Button>
-      <Button fx:id="btnNew" layoutX="180.0" layoutY="296.0" mnemonicParsing="false" onAction="#doNew" text="New">
+      <Button fx:id="btnNew" layoutX="165.0" layoutY="363.0" mnemonicParsing="false" onAction="#doNew" text="New">
          <font>
-            <Font name="System Bold" size="14.0" />
+            <Font name="System Bold" size="15.0" />
          </font>
+         <effect>
+            <InnerShadow height="5.82" radius="2.4725" width="6.07" />
+         </effect>
       </Button>
-      <ImageView fx:id="img" fitHeight="160.0" fitWidth="240.0" layoutX="322.0" layoutY="96.0" onMouseClicked="#doImage" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../static/images/005-add-1.png" />
-         </image>
+      <ImageView fx:id="img" fitHeight="210.0" fitWidth="280.0" layoutX="345.0" layoutY="95.0" onMouseClicked="#doImage" pickOnBounds="true" preserveRatio="true">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
+         <image>
+            <Image url="@../../static/images/005-add-1.png" />
+         </image>
       </ImageView>
-      <ProgressIndicator fx:id="progressIndicator" layoutX="551.0" layoutY="340.0" progress="0.0" visible="false" />
-      <Text fx:id="txtHelp" fill="#ee6060" layoutX="333.0" layoutY="383.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="txtHelpTitle" fill="RED" layoutX="58.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="209.99999823980033">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font></Text>
+      <Text fx:id="txtHelpPrice" fill="RED" layoutX="58.0" layoutY="281.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="209.99999823980033">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font></Text>
+      <Text fx:id="txtHelpImage" fill="RED" layoutX="345.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="209.99999823980033">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Text>
+      <ProgressIndicator fx:id="progressIndicator" layoutX="651.0" layoutY="415.0" progress="0.0" />
    </children>
 </AnchorPane>

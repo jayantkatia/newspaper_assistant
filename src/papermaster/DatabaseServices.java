@@ -48,7 +48,7 @@ public class DatabaseServices {
     		PreparedStatement ppstm=connection.prepareStatement("delete from papermaster where title=?");
     		ppstm.setString(1,title);
     		int rows_affected=ppstm.executeUpdate();
-			System.out.println(rows_affected +" are affected");
+			System.out.println(rows_affected +" are affected"); 
     	}catch(SQLException e) {
     		e.printStackTrace();
     	}
@@ -81,5 +81,4 @@ public class DatabaseServices {
 		}
     	return list;
     }
-    
 }

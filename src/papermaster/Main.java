@@ -12,7 +12,7 @@ public class Main extends Application{
 	public void start(Stage primaryStage) {
 		try {
 			Parent root=FXMLLoader.load(getClass().getResource("view.fxml"));
-			Scene scene=new Scene(root,600,400);
+			Scene scene=new Scene(root,700,475);
 			
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Paper Master");
