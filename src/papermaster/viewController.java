@@ -9,11 +9,15 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-
+import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -58,16 +62,7 @@ public class viewController {
 		Image image=imageAndDialogs.getImageAfterChoose();
 		if(image != null)
 			img.setImage(image);
-//		  Dialog<String> dialog = new Dialog<String>();
-//	      //Setting the title
-//	      dialog.setTitle("Dialog");
-//	      ButtonType type = new ButtonType("Ok", ButtonData.OK_DONE);
-//	      //Setting the content of the dialog
-//	      dialog.setContentText("This is a sample dialog");
-//	      //Adding buttons to the dialog pane
-//	      dialog.getDialogPane().setContent(progressIndicator);
-//	      dialog.getDialogPane().getButtonTypes().add(type);
-//	      dialog.show();
+		
 	}
 
 	
@@ -87,6 +82,9 @@ public class viewController {
 		fillComboBox();
 		System.out.println("Program is executing in "+System.getProperty("user.dir")); //gives root directory where program executes...helps in relative paths
 	
+
+		
+		
 	}
 	
 	
@@ -123,7 +121,8 @@ public class viewController {
 	@FXML
 	void doSave(ActionEvent event) {
 		if (isValidated()) {
-			Task<Void> task=imageAndDialogs.savingUpdatingAfterChoosing("images", comboTitle.getSelectionModel().getSelectedItem());
+			String title=comboTitle.getSelectionModel().getSelectedItem();
+			Task<Void> task=imageAndDialogs.savingUpdatingAfterChoosing("images", title);
 			executeLocalTasks(task);
 			task.setOnSucceeded(new EventHandler < WorkerStateEvent > () {
 				@Override
@@ -133,6 +132,7 @@ public class viewController {
 			});
 			
 			services.saveForPaperMaster(getPaperMasterObject());
+			clearFields();
 			fillComboBox();
 			clearFields();
 		}
@@ -140,7 +140,8 @@ public class viewController {
 	@FXML
 	void doUpdate(ActionEvent event) {
 		if (isValidated()) {
-			Task<Void> task=imageAndDialogs.savingUpdatingAfterChoosing("images", comboTitle.getSelectionModel().getSelectedItem());
+			String title=comboTitle.getSelectionModel().getSelectedItem();
+			Task<Void> task=imageAndDialogs.savingUpdatingAfterChoosing("images", title);
 				if(task!=null) {
 					executeLocalTasks(task);
 					task.setOnSucceeded(new EventHandler < WorkerStateEvent > () {
@@ -171,12 +172,14 @@ public class viewController {
 					@Override
 					public void handle(WorkerStateEvent event) {
 						System.out.println("Done");
-						
 					}
 				});
+				
+				
 				services.deleteForPaperMaster(comboTitle.getSelectionModel().getSelectedItem());
 				clearFields();   //this must come first to delete selection
 				fillComboBox();
+				
 			}else {
 				//alert no such records
 			}	
@@ -189,7 +192,9 @@ public class viewController {
 	void fillComboBox() {
 		comboTitle.getSelectionModel().clearSelection();
 		comboTitle.getEditor().clear();
-		comboTitle.getItems().clear();
+		comboTitle.getItems().removeAll(comboTitle.getItems());
+
+		
 		ArrayList < String > list = services.fetchTitles();
 		comboTitle.getItems().addAll(list);
 		System.out.println("Title Combo Box filled/re-filled");
@@ -234,6 +239,7 @@ public class viewController {
 		progressIndicator.progressProperty().bind(task.progressProperty());
 		Thread th = new Thread(task);
 		th.start();
+		
 	}
 	
 	void clearFields() {

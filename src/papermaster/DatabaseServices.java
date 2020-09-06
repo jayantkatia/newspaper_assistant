@@ -26,6 +26,8 @@ public class DatabaseServices {
 			ppstm.setFloat(2,data.price);
 			ppstm.setString(3,data.imagePath);
 			int rows_affected=ppstm.executeUpdate();
+    		CustomAlert.showDialog(rows_affected, "save");
+
 			System.out.println(rows_affected +" are affected");
     	} catch (SQLException e) {
 			e.printStackTrace();
@@ -38,6 +40,8 @@ public class DatabaseServices {
 			ppstm.setString(2,data.imagePath);
 			ppstm.setString(3,data.title);
 			int rows_affected=ppstm.executeUpdate();
+    		CustomAlert.showDialog(rows_affected, "update");
+
 			System.out.println(rows_affected +" are affected");
     	} catch (SQLException e) {
 			e.printStackTrace();
@@ -48,6 +52,8 @@ public class DatabaseServices {
     		PreparedStatement ppstm=connection.prepareStatement("delete from papermaster where title=?");
     		ppstm.setString(1,title);
     		int rows_affected=ppstm.executeUpdate();
+    		
+    		CustomAlert.showDialog(rows_affected, "delete");
 			System.out.println(rows_affected +" are affected"); 
     	}catch(SQLException e) {
     		e.printStackTrace();
