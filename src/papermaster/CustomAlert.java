@@ -5,15 +5,15 @@ import javafx.scene.image.ImageView;
 
 public class CustomAlert {
 	
-	
-	 static final String icon_delete="file:static/database/002-trash-1.png";
-	 static final String icon_save="file:static/database/006-ok.png";
-	 static final String icon_update="file:static/database/003-refresh.png";
+	final static String icon_delete="file:static/images/002-trash-1.png";
+	final static String icon_update="file:static/images/003-refresh.png";
+	final static String icon_save="file:static/images/006-ok.png";
 	
 	public static void showDialog(int count,String label) {
 
     	Alert alert = new Alert(Alert.AlertType.ERROR);
 
+    	
     	ImageView icon;
     	if(label.equals("delete")) {
     		alert.setHeaderText(count+" Records successfully deleted");
