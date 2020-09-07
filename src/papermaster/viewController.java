@@ -4,20 +4,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import commonlogic.ImageLogic;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -53,50 +47,38 @@ public class viewController {
 	private Text txtHelpImage;
 	
 	
-	@FXML
-	void doImage(MouseEvent event) {
-		img.requestFocus();
-		if (!isPrimaryKeyValidated()) 
-			return;
-		
-		Image image=imageAndDialogs.getImageAfterChoose();
-		if(image != null)
-			img.setImage(image);
-		
-	}
+	
 
 	
 	
 	
 	private DatabaseServices services;
-	private ImageAndDialogs imageAndDialogs;
-
-	private final String dummyImage="file:static/images/005-add-1.png";
-	
-	
+	private ImageLogic imageLogic;
+	private String title;
 	
 	@FXML
 	void initialize() {
 		services = new DatabaseServices();
-		imageAndDialogs=new ImageAndDialogs(dummyImage);
+		imageLogic=new ImageLogic("file:static/images/005-add-1.png","papers");
+		
 		fillComboBox();
+		
 		System.out.println("Program is executing in "+System.getProperty("user.dir")); //gives root directory where program executes...helps in relative paths
-	
-
-		
-		
 	}
 	
 	
 	
 	@FXML
 	void doTitle(ActionEvent event) {
-		ModelPaperMaster data = services.fetchData(comboTitle.getSelectionModel().getSelectedItem());
+		title=comboTitle.getSelectionModel().getSelectedItem();
+		ModelPaperMaster data = services.fetchData(title);
+		//fetches data
+		
 		if (data != null) {
+			System.out.println("Values Fetched...");
 			txtPrice.setText(data.price.toString());
-			img.setImage(new Image(data.imagePath));
-	
-			imageAndDialogs.imagePath=data.imagePath;
+			img.setImage(new Image(data.imagePath));	
+			imageLogic.imagePath=data.imagePath; //updating image
 			
 			//if record exists then save disabled  ,   update,delete enable
 			btnSave.setDisable(true);
@@ -104,15 +86,26 @@ public class viewController {
 			btnUpdate.setDisable(false);
 		
 		} else {
-			//if record exists then save enable      update,delete disable
+			//if record does not exists then save enable      update,delete disable
 			btnUpdate.setDisable(true);
 			btnDelete.setDisable(true);
 			btnSave.setDisable(false);
 		}
 		txtHelpTitle.setText("*");
+	
 	}
 	
-	
+	@FXML
+	void doImage(MouseEvent event) {
+		//img.requestFocus();
+		if (!isPrimaryKeyValidated())   //checks if title validated first cause' user might set image first
+			return;                     //choosen_image != null  && if path fetched then both true and choosenImage of previous will get used 
+										// since in imageLogic.savingUpdatingAfterChoosing()  if(choosenImage==null)=>false
+		Image image=imageLogic.getImageAfterChoose();
+		if(image != null)
+			img.setImage(image);     //sets chosen image
+		
+	}
 	
 	@FXML
 	void doNew(ActionEvent event) {
@@ -121,68 +114,40 @@ public class viewController {
 	@FXML
 	void doSave(ActionEvent event) {
 		if (isValidated()) {
-			String title=comboTitle.getSelectionModel().getSelectedItem();
-			Task<Void> task=imageAndDialogs.savingUpdatingAfterChoosing("images", title);
-			executeLocalTasks(task);
-			task.setOnSucceeded(new EventHandler < WorkerStateEvent > () {
-				@Override
-				public void handle(WorkerStateEvent event) {
-					System.out.println("Done");
-				}
-			});
+			
+			Task<Void> task=imageLogic.savingUpdatingAfterChoosing(title); 
+			executeLocalTasksWithProgressIndicator(task);
 			
 			services.saveForPaperMaster(getPaperMasterObject());
-			clearFields();
-			fillComboBox();
-			clearFields();
+			
+			fillComboBox();    //required since new entry
+			clearFields();		//order must be maintained after filling only clear might be due to selectionIndex 
+			    
 		}
 	}
 	@FXML
 	void doUpdate(ActionEvent event) {
 		if (isValidated()) {
-			String title=comboTitle.getSelectionModel().getSelectedItem();
-			Task<Void> task=imageAndDialogs.savingUpdatingAfterChoosing("images", title);
-				if(task!=null) {
-					executeLocalTasks(task);
-					task.setOnSucceeded(new EventHandler < WorkerStateEvent > () {
-						@Override
-						public void handle(WorkerStateEvent event) {
-							System.out.println("Done");
-							
-						}
-					});
-				}
-				services.updateForPaperMaster(getPaperMasterObject());
-				clearFields();
-			}
-			
 		
+				Task<Void> task=imageLogic.savingUpdatingAfterChoosing(title);
+				if(task!=null) {
+					executeLocalTasksWithProgressIndicator(task);
+				}       //task null in case user fetches and does not updates previous image 
+			services.updateForPaperMaster(getPaperMasterObject());  
+			clearFields();
+		}		
 	}
 	@FXML
 	void doDelete(ActionEvent event) {
 		if(isPrimaryKeyValidated()) {
-			ModelPaperMaster data=services.fetchData(comboTitle.getSelectionModel().getSelectedItem());
-			if (data!=null) {
-				String[] fileNameArray=data.imagePath.split("/");
-				Task<Void> task=imageAndDialogs.deleteImage(System.getProperty("user.dir")+"/database/images/"+fileNameArray[2]);
+				Task<Void> task=imageLogic.deleteImage(imageLogic.getFileName());
 				Thread th = new Thread(task);
 				th.start();
 				
-				task.setOnSucceeded(new EventHandler < WorkerStateEvent > () {
-					@Override
-					public void handle(WorkerStateEvent event) {
-						System.out.println("Done");
-					}
-				});
+				services.deleteForPaperMaster(title);
 				
-				
-				services.deleteForPaperMaster(comboTitle.getSelectionModel().getSelectedItem());
-				clearFields();   //this must come first to delete selection
-				fillComboBox();
-				
-			}else {
-				//alert no such records
-			}	
+				fillComboBox();   //required since entry removed
+				clearFields();   
 		}
 	}
 	
@@ -190,20 +155,19 @@ public class viewController {
 	
 	
 	void fillComboBox() {
-		comboTitle.getSelectionModel().clearSelection();
-		comboTitle.getEditor().clear();
 		comboTitle.getItems().removeAll(comboTitle.getItems());
 
-		
 		ArrayList < String > list = services.fetchTitles();
 		comboTitle.getItems().addAll(list);
 		System.out.println("Title Combo Box filled/re-filled");
+		
+		comboTitle.requestFocus();    //to simulate a false click as close button still not clears
 	}
 	ModelPaperMaster getPaperMasterObject() {
-		return new ModelPaperMaster(comboTitle.getSelectionModel().getSelectedItem(), imageAndDialogs.imagePath, Float.parseFloat(txtPrice.getText()));
+		return new ModelPaperMaster(title, imageLogic.imagePath, Float.parseFloat(txtPrice.getText()));
 	}
 	boolean isPrimaryKeyValidated() {
-		if (comboTitle.getSelectionModel().getSelectedItem()==null) {
+		if (title==null) {
 			txtHelpTitle.setText("Please enter title");
 			return false;
 		}
@@ -212,7 +176,8 @@ public class viewController {
 	boolean isValidated() {
 		boolean flag=isPrimaryKeyValidated();
 		
-		if (imageAndDialogs.imagePath.equals(dummyImage) && imageAndDialogs.choosenImage==null ) {
+		//if both dummyImage and null(chosen) then error.... any one or more failing  ensures image is there
+		if (imageLogic.imagePath.equals(imageLogic.dummyImage) && imageLogic.choosenImage==null ) {
 			txtHelpImage.setText("Please upload an image");
 			flag= false;
 		}
@@ -222,24 +187,15 @@ public class viewController {
 			flag=false;
 		}
 		
-		System.out.println(imageAndDialogs.imagePath);
-		System.out.println(dummyImage);
-	
-		System.out.println(txtPrice.getText().isEmpty());
-		System.out.println(imageAndDialogs.choosenImage ==null);
-		System.out.println(imageAndDialogs.imagePath.equals(dummyImage));
-		System.out.println();
 		System.out.println("Fields are Valid :: "+flag);
 		return flag;
 	}
 	
-	void executeLocalTasks(Task<Void> task) {
-		progressIndicator.setVisible(true);
+	void executeLocalTasksWithProgressIndicator(Task<Void> task) {
 		progressIndicator.progressProperty().unbind();
 		progressIndicator.progressProperty().bind(task.progressProperty());
 		Thread th = new Thread(task);
 		th.start();
-		
 	}
 	
 	void clearFields() {
@@ -247,12 +203,12 @@ public class viewController {
 		comboTitle.getSelectionModel().clearSelection();
 		comboTitle.getEditor().clear();
 		txtPrice.clear();
-		img.setImage(new Image(dummyImage));
+		img.setImage(new Image(imageLogic.dummyImage));
 		
 		//setting initial states
-		imageAndDialogs.imagePath=dummyImage;
-		imageAndDialogs.choosenImage=null;
-		
+		imageLogic.setIntialState();
+		title=null;
+
 		
 		//removing error messages
 		txtHelpTitle.setText("*");
@@ -263,6 +219,7 @@ public class viewController {
 		btnUpdate.setDisable(false);
 		btnSave.setDisable(false);
 		btnDelete.setDisable(false);
+		
 		
 		System.out.println("Cleared Fields, state recovered, removed error messages, enabled buttons");
 	}

@@ -1,4 +1,4 @@
-package papermaster;
+package commonlogic;
 
 import javafx.scene.control.Alert;
 import javafx.scene.image.ImageView;
@@ -10,9 +10,9 @@ public class CustomAlert {
 	final static String icon_save="file:static/images/006-ok.png";
 	
 	public static void showDialog(int count,String label) {
-
+		//count is number of rows affected in database and label tells up which function is being performed
+		
     	Alert alert = new Alert(Alert.AlertType.ERROR);
-
     	
     	ImageView icon;
     	if(label.equals("delete")) {
