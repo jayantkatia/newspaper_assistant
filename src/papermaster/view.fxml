@@ -88,7 +88,7 @@
          <font>
             <Font name="System Italic" size="14.0" />
          </font></Text>
-      <Text fx:id="txtHelpImage" fill="RED" layoutX="345.0" layoutY="328.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="209.99999823980033">
+      <Text fx:id="txtHelpImage" fill="RED" layoutX="345.0" layoutY="329.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="295.99999823980033">
          <font>
             <Font name="System Italic" size="14.0" />
          </font>

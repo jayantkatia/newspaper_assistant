@@ -23,7 +23,12 @@ public class CustomAlert {
     		alert.setHeaderText(count+" Records successfully updated");
             alert.setTitle("Updated Successfully");
              icon = new ImageView(icon_update);
-    	}else {
+    	}else if(label.equals("paid")) {
+    		alert.setHeaderText("bill records successfully paid");
+            alert.setTitle("paid Successfully");
+            icon = new ImageView(icon_save);
+    	}
+    	else {
     		alert.setHeaderText(count+" Records successfully saved");
             alert.setTitle("Saved Successfully");
              icon = new ImageView(icon_save);

@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import commonlogic.ImageLogic;
+import commonlogic.RequiredImageLogic;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,6 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
+//TODO::  Support of jpg,jpeg
+//TODO::  Delete when user fetches>change image with different format >saves   ....delete prev image with different format
+//TODO::  Add validation for txtPrice to allow only numbers
 
 public class viewController {
 	@FXML
@@ -53,13 +56,13 @@ public class viewController {
 	
 	
 	private DatabaseServices services;
-	private ImageLogic imageLogic;
+	private RequiredImageLogic imageLogic;
 	private String title;
 	
 	@FXML
 	void initialize() {
 		services = new DatabaseServices();
-		imageLogic=new ImageLogic("file:static/images/005-add-1.png","papers");
+		imageLogic=new RequiredImageLogic("file:static/images/005-add-1.png","papers");
 		
 		fillComboBox();
 		
@@ -80,6 +83,10 @@ public class viewController {
 			img.setImage(new Image(data.imagePath));	
 			imageLogic.imagePath=data.imagePath; //updating image
 			
+			imageLogic.choosenImage=null;   //choosen_image != null  && if path fetched then both true and choosenImage of previous will get used 
+			// since in imageLogic.savingUpdatingAfterChoosing()  if(choosenImage==null)=>false
+			
+			
 			//if record exists then save disabled  ,   update,delete enable
 			btnSave.setDisable(true);
 			btnDelete.setDisable(false);
@@ -97,13 +104,20 @@ public class viewController {
 	
 	@FXML
 	void doImage(MouseEvent event) {
-		//img.requestFocus();
-		if (!isPrimaryKeyValidated())   //checks if title validated first cause' user might set image first
-			return;                     //choosen_image != null  && if path fetched then both true and choosenImage of previous will get used 
-										// since in imageLogic.savingUpdatingAfterChoosing()  if(choosenImage==null)=>false
+		img.requestFocus();             //to make title value enter as focus still remains on title box
+		
+		
+//		if (!isPrimaryKeyValidated())   //checks if title validated first cause' user might set image first
+//			return;                 //choosen_image != null  && if path fetched then both true and choosenImage of previous will get used 
+									// since in imageLogic.savingUpdatingAfterChoosing()  if(choosenImage==null)=>false
 		Image image=imageLogic.getImageAfterChoose();
-		if(image != null)
-			img.setImage(image);     //sets chosen image
+		if(image != null) {
+			img.setImage(image); //sets chosen image
+			txtHelpImage.setText("*");
+		}
+		else
+			txtHelpImage.setText("Might be due to broken image, pls try more supported format png");
+	
 		
 	}
 	

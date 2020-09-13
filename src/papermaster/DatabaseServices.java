@@ -63,6 +63,9 @@ public class DatabaseServices {
     }
     ModelPaperMaster fetchData(String title) {
     	ModelPaperMaster data = null;
+    	if(title==null) {
+    		return data;
+    	}
     	try {
 			PreparedStatement ppstm=connection.prepareStatement("select * from papermaster where title=?");
 			ppstm.setString(1, title);

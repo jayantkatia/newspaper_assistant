@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="billCollector.viewController">
+   <children>
+      <Text layoutX="277.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bill  Collector" textOrigin="CENTER" wrappingWidth="184.99999046325684">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Text>
+      <Line endX="135.0" endY="60.0" layoutX="63.0" layoutY="6.0" startX="438.0" startY="60.0" />
+      <Label layoutX="56.0" layoutY="108.0" prefHeight="19.0" prefWidth="327.0" text="Customer Registered Mobile Number:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Text fx:id="helpMobile" fill="RED" layoutX="53.0" layoutY="183.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="604.9999788403511">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="comboMobile" editable="true" layoutX="56.0" layoutY="138.0" onAction="#doMobile" prefHeight="26.0" prefWidth="374.0" promptText="Enter mobile number">
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </ComboBox>
+      <Label layoutX="453.0" layoutY="143.0" prefHeight="16.0" prefWidth="194.0" text="Press ENTER to fetch bills" />
+      <ListView fx:id="list" layoutX="56.0" layoutY="236.0" prefHeight="306.0" prefWidth="327.0">
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </ListView>
+      <ListView fx:id="listPrices" layoutX="389.0" layoutY="236.0" prefHeight="306.0" prefWidth="208.0">
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </ListView>
+      <TextField fx:id="txtBill" alignment="CENTER" editable="false" layoutX="385.0" layoutY="551.0" prefHeight="32.0" prefWidth="216.0" style="-fx-background-color: lightblue;" text="0.0">
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </TextField>
+      <Label layoutX="144.0" layoutY="544.0" prefHeight="46.0" prefWidth="226.0" text="Total Pending Amount :" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnSave" layoutX="227.0" layoutY="624.0" mnemonicParsing="false" onAction="#doSave" prefHeight="32.0" prefWidth="185.0" text="Paid">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </Button>
+      <Button fx:id="btnNew" layoutX="516.0" layoutY="624.0" mnemonicParsing="false" onAction="#doNew" text="Clear">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </Button>
+      <Text layoutX="53.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customer Pending Bills :" textOrigin="CENTER" wrappingWidth="239.99999351799488">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

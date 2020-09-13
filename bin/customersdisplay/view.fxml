@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="780.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customersdisplay.viewController">
+   <children>
+      <Text layoutX="263.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customers Display Board" textOrigin="CENTER" wrappingWidth="303.9999932050705">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Text>
+      <Line endX="112.0" endY="60.0" layoutX="113.0" layoutY="16.0" startX="478.0" startY="60.0" />
+      <Label layoutX="46.0" layoutY="108.0" prefHeight="19.0" prefWidth="251.0" text="Filter Basis :">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboFilter" layoutX="46.0" layoutY="142.0" onAction="#doFilter" prefHeight="26.0" prefWidth="280.0" promptText="Select Filter">
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </ComboBox>
+      <ComboBox fx:id="comboValue" layoutX="422.0" layoutY="142.0" onAction="#doValue" prefHeight="26.0" prefWidth="280.0" promptText="Select Value">
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </ComboBox>
+      <Text fx:id="helpfilter" fill="RED" layoutX="46.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="279.99998927116394">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Text>
+      <Label layoutX="422.0" layoutY="108.0" prefHeight="19.0" prefWidth="314.0" text="Value :">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <Text fx:id="helpvalue" fill="RED" layoutX="427.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="303.99999618530273">
+         <font>
+            <Font name="System Italic" size="14.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="556.0" layoutX="19.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" width="760.0" />
+      <TableView layoutX="36.0" layoutY="228.0" prefHeight="515.0" prefWidth="726.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

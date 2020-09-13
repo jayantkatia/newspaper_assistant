@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javafx.concurrent.Task;
@@ -12,17 +13,17 @@ import javafx.scene.image.Image;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
-public class ImageLogic {
+public class RequiredImageLogic {
 	
 	public String dummyImage;
 	public final String folder;
-	private final ArrayList < String > extensionFilterList = new ArrayList < String > (Arrays.asList("*.jpg", "*.jpeg", "*.png"));
+	private final ArrayList < String > extensionFilterList = new ArrayList < String > (Arrays.asList("*.gif", "*.jpeg", "*.png"));
 	
 	public String imagePath;
 	public File choosenImage;
 	 
 	
-	public ImageLogic(String imagePath,String folder) {
+	public RequiredImageLogic(String imagePath,String folder) {
 		this.imagePath=imagePath;
 		this.dummyImage=imagePath;
 		this.folder=folder;
@@ -44,13 +45,24 @@ public class ImageLogic {
 
 		Image pic = null;
 		try {
-			pic = new Image(new FileInputStream(choosenImage));
+		
+			FileInputStream f1=new FileInputStream(choosenImage.getAbsolutePath());
+			System.out.println(f1.available());
+			pic = new Image(f1);
+		
 		} catch(FileNotFoundException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		if (pic != null) {
+		
+		
+		if (pic.getHeight() !=0 ) {
+			System.out.println("Pic is being returned ");
+			System.out.println(pic.getHeight());
 			return pic;
 		}	
+		System.out.println("Pic Height is zero  /// might be due to broken jpeg or invalid jpg");
 		return null;
 	}
 	
@@ -91,6 +103,7 @@ public class ImageLogic {
 					
 
 					FileOutputStream f2 = new FileOutputStream(fileName);   //fileName must be final/effectively-final to access this
+					//fileOutputStream doesn't requires file: prefix
 					int maxlength = f1.available();
 					int i = 0;
 
@@ -102,9 +115,7 @@ public class ImageLogic {
 					}
 					f1.close();
 					f2.close();
-					
-				
-					
+
 					return null;
 			}
 		};
@@ -176,5 +187,9 @@ public class ImageLogic {
 		//returns  .png (includng .)
 		return fileName.substring(fileName.lastIndexOf('.'));
 	}
+	
+	
+	
+	
 	
 }

@@ -1,6 +1,5 @@
 package validations;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 
 public class ChangeListenerValidations {
 //	public static ChangeListener<String> txtFieldValidation(){
