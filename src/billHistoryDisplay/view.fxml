@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="900.0" prefWidth="810.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="billHistoryDisplay.viewController">
+   <children>
+      <Text layoutX="342.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bill History " textOrigin="CENTER" wrappingWidth="173.9999932050705">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Text>
+      <Line endX="112.0" endY="60.0" layoutX="123.0" layoutY="9.0" startX="478.0" startY="60.0" />
+      <Label layoutX="56.0" layoutY="99.0" prefHeight="19.0" prefWidth="315.0" text="Custumberomer Mobile Number ::">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboMobile" layoutX="74.0" layoutY="125.0" onAction="#doMobile" prefHeight="26.0" prefWidth="280.0" promptText="Select Customer Mobile">
+         <effect>
+            <InnerShadow height="5.82" radius="2.41" width="5.82" />
+         </effect>
+      </ComboBox>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#608094" height="556.0" layoutX="25.0" layoutY="183.0" stroke="BLACK" strokeType="INSIDE" width="760.0" />
+      <TableView fx:id="table" layoutX="42.0" layoutY="199.0" prefHeight="525.0" prefWidth="726.0" />
+      <RadioButton layoutX="444.0" layoutY="129.0" mnemonicParsing="false" text="Paid">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <effect>
+            <InnerShadow height="8.86" radius="3.9299999999999997" width="8.86" />
+         </effect>
+      </RadioButton>
+      <RadioButton layoutX="585.0" layoutY="129.0" mnemonicParsing="false" text="Unpaid">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+         <effect>
+            <InnerShadow height="8.86" radius="3.9299999999999997" width="8.86" />
+         </effect>
+      </RadioButton>
+      <Text layoutX="235.0" layoutY="767.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Paid :" textOrigin="CENTER" wrappingWidth="79.9999932050705">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="486.0" layoutY="767.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unpaid :" textOrigin="CENTER" wrappingWidth="98.9999932050705">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Text>
+      <Text fill="#38901f" layoutX="321.0" layoutY="767.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textOrigin="CENTER" wrappingWidth="122.9999932050705">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+      <Text fill="RED" layoutX="602.0" layoutY="767.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.0" textOrigin="CENTER" wrappingWidth="122.99999065697193">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
