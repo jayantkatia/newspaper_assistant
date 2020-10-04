@@ -3,8 +3,11 @@ package jdbcConnection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.*;
 
 public class ConnectToJDBC{
+	
+	Class.forName("com.mysql.cj.jdbc.Driver");
 	
 	public static Connection getConnection(){
 		Connection connection=null;
