@@ -6,6 +6,8 @@ import java.sql.SQLException;
 
 public class ConnectToJDBC{
 	
+	Class.forName("com.mysql.cj.jdbc.Driver");
+	
 	public static Connection getConnection(){
 		Connection connection=null;
 		
