@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.effect.InnerShadow?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="780.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customersdisplay.viewController">
+<AnchorPane prefHeight="790.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="customersdisplay.viewController">
    <children>
       <Text layoutX="263.0" layoutY="51.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Customers Display Board" textOrigin="CENTER" wrappingWidth="303.9999932050705">
          <font>
@@ -44,17 +43,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </Label>
-      <Text fx:id="helpvalue" fill="RED" layoutX="427.0" layoutY="192.0" strokeType="OUTSIDE" strokeWidth="0.0" text="*" wrappingWidth="303.99999618530273">
-         <font>
-            <Font name="System Italic" size="14.0" />
-         </font>
-      </Text>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="556.0" layoutX="19.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" width="760.0" />
-      <TableView layoutX="36.0" layoutY="228.0" prefHeight="515.0" prefWidth="726.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#468dbc" height="556.0" layoutX="19.0" layoutY="207.0" stroke="BLACK" strokeType="INSIDE" width="760.0" />
+      <TableView fx:id="table" layoutX="36.0" layoutY="223.0" prefHeight="525.0" prefWidth="726.0" />
    </children>
 </AnchorPane>
