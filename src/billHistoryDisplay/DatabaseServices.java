@@ -29,9 +29,12 @@ public class DatabaseServices {
 			while(table.next()) {
 				data.add(new UserBean(table.getString("name"), table.getString("customermobile"), table.getInt("days"), table.getDate("dobilling"), table.getFloat("amount")));
 			}
+			
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		ppstm.close();
+		connection.close();
 		return data;
 	}
 }
